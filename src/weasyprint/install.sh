@@ -74,7 +74,7 @@ check_packages() {
 }
 
 # Install dependencies
-check_packages apt install libpango-1.0-0 libpangoft2-1.0-0
+check_packages libpango-1.0-0 libpangoft2-1.0-0
 
 # Install weasyprint if it's missing
 if ! weasyprint version &> /dev/null ; then

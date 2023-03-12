@@ -2,7 +2,7 @@
     "id": "weasyprint",
     "version": "0.0.1",
     "name": "weasyprint",
-    "documentationURL": "https://weasyprint.org/",
+    "documentationURL": "https://github.com/cedricziel/devcontainer-features",
     "options": {
     },
     "containerEnv": {
