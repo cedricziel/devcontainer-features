@@ -74,11 +74,11 @@ check_packages() {
 }
 
 # Install dependencies
-check_packages apt install python3-pip python3-cffi python3-brotli libpango-1.0-0 libpangoft2-1.0-0
+check_packages apt install libpango-1.0-0 libpangoft2-1.0-0
 
 # Install weasyprint if it's missing
 if ! weasyprint version &> /dev/null ; then
-    python3 -m pip install --user --upgrade --no-cache-dir
+    python3 -m pip install --user --upgrade --no-cache-dir cffi brotli weasyprint
 fi
 
 # Clean up
