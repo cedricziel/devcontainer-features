@@ -2,7 +2,7 @@
     "install_w_python": {
         "image": "ubuntu:focal",
         "features": {
-            "python": {
+            "ghcr.io/devcontainers/features/python:1": {
                 "version": "3.11"
             },
             "weasyprint": {}
