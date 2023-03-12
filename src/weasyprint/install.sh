@@ -4,6 +4,7 @@ VERSION="${VERSION:-"latest"}"
 
 USERNAME="${USERNAME:-"${_REMOTE_USER:-"automatic"}"}"
 UPDATE_RC="${UPDATE_RC:-"true"}"
+PYTHON_INSTALL_PATH="${INSTALLPATH:-"/usr/local/python"}"
 
 set -e
 
@@ -72,8 +73,36 @@ install_user_package() {
     fi
 }
 
+install_system_python() {
+    check_packages python3 python3-doc python3-pip python3-venv python3-dev python3-tk
+
+    CURRENT_PATH="${PYTHON_INSTALL_PATH}/current"
+    INSTALL_PATH="/usr"
+
+    local current_bin_path="${CURRENT_PATH}/bin"
+    if [ "${OVERRIDE_DEFAULT_VERSION}" = "true" ]; then
+        rm -rf "${current_bin_path}"
+    fi
+    if [ ! -d "${current_bin_path}" ] ; then
+        mkdir -p "${current_bin_path}"
+        # Add an interpreter symlink but point it to "/usr" since python is at /usr/bin/python, add other alises
+        ln -s "${INSTALL_PATH}/bin/python3" "${current_bin_path}/python3"
+        ln -s "${INSTALL_PATH}/bin/python3" "${current_bin_path}/python"
+        ln -s "${INSTALL_PATH}/bin/pydoc3" "${current_bin_path}/pydoc3"
+        ln -s "${INSTALL_PATH}/bin/pydoc3" "${current_bin_path}/pydoc"
+        ln -s "${INSTALL_PATH}/bin/python3-config" "${current_bin_path}/python3-config"
+        ln -s "${INSTALL_PATH}/bin/python3-config" "${current_bin_path}/python-config"
+    fi
+}
+
 # Install dependencies
 check_packages libpango-1.0-0 libpangoft2-1.0-0
+
+# hack - if no python was installed, install the os-provided.
+# would be solved by hard devcontainer dependencies
+if ! /usr/local/python/current/bin/python3 --version &> /dev/null ; then
+    install_system_python
+fi
 
 # Install weasyprint if it's missing
 if ! weasyprint --info &> /dev/null ; then
