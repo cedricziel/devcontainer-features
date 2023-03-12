@@ -5,8 +5,6 @@ VERSION="${VERSION:-"latest"}"
 USERNAME="${USERNAME:-"${_REMOTE_USER:-"automatic"}"}"
 UPDATE_RC="${UPDATE_RC:-"true"}"
 
-HUGO_DIR="${HUGO_DIR:-"/usr/local/hugo"}"
-
 set -e
 
 # Clean up
@@ -44,18 +42,6 @@ if [ "${architecture}" != "amd64" ] && [ "${architecture}" != "x86_64" ] && [ "$
     echo "(!) Architecture $architecture unsupported"
     exit 1
 fi
-
-updaterc() {
-    if [ "${UPDATE_RC}" = "true" ]; then
-        echo "Updating /etc/bash.bashrc and /etc/zsh/zshrc..."
-        if [[ "$(cat /etc/bash.bashrc)" != *"$1"* ]]; then
-            echo -e "$1" >> /etc/bash.bashrc
-        fi
-        if [ -f "/etc/zsh/zshrc" ] && [[ "$(cat /etc/zsh/zshrc)" != *"$1"* ]]; then
-            echo -e "$1" >> /etc/zsh/zshrc
-        fi
-    fi
-}
 
 sudo_if() {
     COMMAND="$*"
