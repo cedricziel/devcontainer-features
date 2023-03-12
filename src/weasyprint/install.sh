@@ -43,15 +43,6 @@ if [ "${architecture}" != "amd64" ] && [ "${architecture}" != "x86_64" ] && [ "$
     exit 1
 fi
 
-sudo_if() {
-    COMMAND="$*"
-    if [ "$(id -u)" -eq 0 ] && [ "$USERNAME" != "root" ]; then
-        su - "$USERNAME" -c "$COMMAND"
-    else
-        "$COMMAND"
-    fi
-}
-
 apt_get_update()
 {
     if [ "$(find /var/lib/apt/lists/* | wc -l)" = "0" ]; then
@@ -73,7 +64,12 @@ check_packages() {
 
 install_user_package() {
     PACKAGE="$1"
-    sudo_if /usr/local/python/current/bin/python3 -m pip install --user --upgrade --no-cache-dir "$PACKAGE"
+
+    if [ "$(id -u)" -eq 0 ] && [ "$USERNAME" != "root" ]; then
+        su - "$USERNAME" -c "/usr/local/python/current/bin/python3 -m pip install --user --upgrade --no-cache-dir $PACKAGE"
+    else
+        /usr/local/python/current/bin/python3 -m pip install --user --upgrade --no-cache-dir "$PACKAGE"
+    fi
 }
 
 # Install dependencies
