@@ -11,7 +11,7 @@ check "pip is installed" pip --version
 check "pip is installed" pip3 --version
 
 # Check that tools can execute
-check "weasyprint is installed" weasyprint --version
+check "weasyprint is installed" weasyprint --info
 
 # Report result
 reportResults

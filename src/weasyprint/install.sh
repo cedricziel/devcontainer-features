@@ -57,6 +57,15 @@ updaterc() {
     fi
 }
 
+sudo_if() {
+    COMMAND="$*"
+    if [ "$(id -u)" -eq 0 ] && [ "$USERNAME" != "root" ]; then
+        su - "$USERNAME" -c "$COMMAND"
+    else
+        "$COMMAND"
+    fi
+}
+
 apt_get_update()
 {
     if [ "$(find /var/lib/apt/lists/* | wc -l)" = "0" ]; then
@@ -73,12 +82,17 @@ check_packages() {
     fi
 }
 
+install_user_package() {
+    PACKAGE="$1"
+    sudo_if "${PYTHON_SRC}" -m pip install --user --upgrade --no-cache-dir "$PACKAGE"
+}
+
 # Install dependencies
 check_packages libpango-1.0-0 libpangoft2-1.0-0
 
 # Install weasyprint if it's missing
-if ! weasyprint version &> /dev/null ; then
-    python3 -m pip install --user --upgrade --no-cache-dir cffi brotli weasyprint
+if ! weasyprint --info &> /dev/null ; then
+    install_user_package cffi brotli weasyprint
 fi
 
 # Clean up
