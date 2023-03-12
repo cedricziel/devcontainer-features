@@ -74,7 +74,7 @@ install_user_package() {
 }
 
 install_system_python() {
-    check_packages python3 python3-setuptools python3-doc python3-pip python3-venv python3-dev python3-tk
+    check_packages python3 python3-setuptools python3-doc python3-pip python3-venv python3-dev python3-tk libffi-dev
 
     CURRENT_PATH="${PYTHON_INSTALL_PATH}/current"
     INSTALL_PATH="/usr"
