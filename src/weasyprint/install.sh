@@ -95,7 +95,9 @@ check_packages libpango-1.0-0 libpangoft2-1.0-0
 
 # Install weasyprint if it's missing
 if ! weasyprint --info &> /dev/null ; then
-    install_user_package cffi brotli weasyprint
+    install_user_package cffi
+    install_user_package brotli
+    install_user_package weasyprint
 fi
 
 # Clean up
