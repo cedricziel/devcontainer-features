@@ -1,0 +1,16 @@
+{
+    "id": "weasyprint",
+    "version": "0.0.1",
+    "name": "weasyprint",
+    "documentationURL": "https://weasyprint.org/",
+    "options": {
+    },
+    "containerEnv": {
+      "HUGO_DIR": "/usr/local/hugo",
+      "PATH": "/usr/local/hugo/bin:${PATH}"
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers/features/python"
+    ]
+  }
