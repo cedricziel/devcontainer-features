@@ -84,7 +84,7 @@ check_packages() {
 
 install_user_package() {
     PACKAGE="$1"
-    sudo_if "${PYTHON_SRC}" -m pip install --user --upgrade --no-cache-dir "$PACKAGE"
+    sudo_if python3 -m pip install --user --upgrade --no-cache-dir "$PACKAGE"
 }
 
 # Install dependencies
